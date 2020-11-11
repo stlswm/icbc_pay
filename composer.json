@@ -1,0 +1,35 @@
+{
+  "name": "stlswm/icbc-pay",
+  "description": "icbc pay SDK",
+  "keywords": [
+    "stlswm",
+    "icbc",
+    "pay"
+  ],
+  "authors": [
+    {
+      "name": "wang min",
+      "email": "stlswm@163.com",
+      "homepage": "https://www.stlswm.com"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "~6.0",
+    "ext-openssl": "*",
+    "ext-curl": "*",
+    "stlswm/php-encrypt": "^0.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "stlswm\\IcbcPay\\": "src/"
+    },
+    "files": [
+    ]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8"
+  }
+}
