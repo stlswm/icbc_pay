@@ -1,6 +1,6 @@
 <?php
 
-namespace QR;
+namespace Merchant\QR;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -17,12 +17,12 @@ class QRGenerator extends TestCase
      */
     public function testGenerator()
     {
-        $config = json_decode(file_get_contents(__DIR__.'/../Config/config.json'), true);
-        $myPrivateKey = file_get_contents(__DIR__.'/../Config/yourname.pri');
-        $icbcPubicKey = file_get_contents(__DIR__.'/../Config/icbc.pub');
+        $config = json_decode(file_get_contents(__DIR__.'/../../Config/config.json'), true);
+        $myPrivateKey = file_get_contents(__DIR__.'/../../Config/yourname.pri');
+        $icbcPubicKey = file_get_contents(__DIR__.'/../../Config/icbc.pub');
         $cli = new DefaultClient($config['app_id'], $myPrivateKey, $icbcPubicKey, 'RSA2', 'AES',
             $config['encrypt_key']);
-        $req = new \stlswm\IcbcPay\QR\QRGenerator();
+        $req = new \stlswm\IcbcPay\Merchant\QR\QRGenerator();
         $req->setBusinessParam('mer_id', $config['mer_id']);
         $req->setBusinessParam('store_code', $config['store_code']);
         $req->setBusinessParam('out_trade_no', 'ZHL777O15002039');
@@ -36,7 +36,7 @@ class QRGenerator extends TestCase
         $req->setBusinessParam('sp_flag', '0');
         $req->setBusinessParam('notify_flag', '1');
         $back = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),
-            \stlswm\IcbcPay\QR\QRGenerator::UrlV2);
+            \stlswm\IcbcPay\Merchant\QR\QRGenerator::UrlV2);
         $this->assertSame(true, $back->isSuccess());
     }
 }

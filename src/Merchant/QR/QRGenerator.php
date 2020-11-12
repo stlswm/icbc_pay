@@ -1,6 +1,6 @@
 <?php
 
-namespace stlswm\IcbcPay\QR;
+namespace stlswm\IcbcPay\Merchant\QR;
 
 use Exception;
 use stlswm\IcbcPay\Request\BaseRequest;

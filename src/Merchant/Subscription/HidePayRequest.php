@@ -1,6 +1,5 @@
 <?php
-
-namespace stlswm\IcbcPay\AggregatePay;
+namespace stlswm\IcbcPay\Merchant\Subscription;
 
 use \Exception;
 use stlswm\IcbcPay\Request\BaseRequest;

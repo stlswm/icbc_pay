@@ -1,15 +1,15 @@
 <?php
 
-namespace stlswm\IcbcPay\AggregatePay;
+namespace stlswm\IcbcPay\Merchant\Subscription;
 
 use \Exception;
 use stlswm\IcbcPay\Request\BaseRequest;
 
 /**
- * Class Subscription
- * @package stlswm\IcbcPay\AggregatePay
+ * Class PayRequest
+ * @package stlswm\IcbcPay\Merchant\Subscription
  */
-class Subscription extends BaseRequest
+class PayRequest extends BaseRequest
 {
     const UrlV1 = 'https://gw.open.icbc.com.cn/ui/aggregate/payment/request/V1';
     const UrlV2 = 'https://gw.open.icbc.com.cn/ui/aggregate/payment/request/V2';

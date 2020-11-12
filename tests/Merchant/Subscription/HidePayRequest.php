@@ -1,6 +1,6 @@
 <?php
 
-namespace AggregatePay;
+namespace Merchant\Subscription;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -18,12 +18,12 @@ class HidePayRequest extends TestCase
      */
     public function testPay()
     {
-        $config = json_decode(file_get_contents(__DIR__.'/../Config/config.json'), true);
-        $myPrivateKey = file_get_contents(__DIR__.'/../Config/yourname.pri');
-        $icbcPubicKey = file_get_contents(__DIR__.'/../Config/icbc.pub');
+        $config = json_decode(file_get_contents(__DIR__.'/../../Config/config.json'), true);
+        $myPrivateKey = file_get_contents(__DIR__.'/../../Config/yourname.pri');
+        $icbcPubicKey = file_get_contents(__DIR__.'/../../Config/icbc.pub');
         $cli = new DefaultClient($config['app_id'], $myPrivateKey, $icbcPubicKey, 'RSA2', 'AES',
             $config['encrypt_key']);
-        $req = new \stlswm\IcbcPay\AggregatePay\HidePayRequest();
+        $req = new \stlswm\IcbcPay\Merchant\Subscription\HidePayRequest();
         $req->setBusinessParam('mer_id', $config['mer_id']);
         $req->setBusinessParam('tp_app_id', $config['tp_app_id']);
         $req->setBusinessParam('tp_open_id', $config['tp_open_id']);
@@ -41,7 +41,7 @@ class HidePayRequest extends TestCase
         $req->setBusinessParam('order_channel', '101');
         $req->setReqEncrypt(true);
         $res = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),
-            \stlswm\IcbcPay\AggregatePay\HidePayRequest::UrlV1);
+            \stlswm\IcbcPay\Merchant\Subscription\HidePayRequest::UrlV1);
         $this->assertSame(true, $res->isSuccess());
     }
 }

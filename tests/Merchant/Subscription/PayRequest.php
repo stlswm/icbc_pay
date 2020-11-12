@@ -1,16 +1,16 @@
 <?php
 
-namespace AggregatePay;
+namespace Merchant\Subscription;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
 use stlswm\IcbcPay\Client\DefaultClient;
 
 /**
- * Class HidePayRequest
- * @package AggregatePay
+ * Class PayRequest
+ * @package Merchant\Subscription
  */
-class Subscription extends TestCase
+class PayRequest extends TestCase
 {
     /**
      * 支付下单测试
@@ -18,12 +18,12 @@ class Subscription extends TestCase
      */
     public function testPay()
     {
-        $config = json_decode(file_get_contents(__DIR__.'/../Config/config.json'), true);
-        $myPrivateKey = file_get_contents(__DIR__.'/../Config/yourname.pri');
-        $icbcPubicKey = file_get_contents(__DIR__.'/../Config/yourname.pub');
+        $config = json_decode(file_get_contents(__DIR__.'/../../Config/config.json'), true);
+        $myPrivateKey = file_get_contents(__DIR__.'/../../Config/yourname.pri');
+        $icbcPubicKey = file_get_contents(__DIR__.'/../../Config/icbc.pub');
         $cli = new DefaultClient($config['app_id'], $myPrivateKey, $icbcPubicKey, 'RSA2', 'AES',
             $config['encrypt_key']);
-        $req = new \stlswm\IcbcPay\AggregatePay\Subscription();
+        $req = new \stlswm\IcbcPay\Merchant\Subscription\PayRequest();
         $req->setBusinessParam('mer_id', $config['mer_id']);
         $req->setBusinessParam('tp_app_id', $config['tp_app_id']);
         $req->setBusinessParam('tp_open_id', $config['tp_open_id']);
@@ -39,10 +39,9 @@ class Subscription extends TestCase
         $req->setBusinessParam('return_url', 'http://localhost');
         $req->setBusinessParam('notify_url', 'http://localhost');
         $req->setBusinessParam('notify_type', 'AG');
-        //$req->setReqEncrypt(true);
-        $back = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),
-            \stlswm\IcbcPay\AggregatePay\Subscription::UrlV2);
-        var_dump($back);
-        die;
+        $req->setReqEncrypt(true);
+        $res = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),
+            \stlswm\IcbcPay\Merchant\Subscription\PayRequest::UrlV2);
+        $this->assertSame(true, $res->isSuccess());
     }
 }
