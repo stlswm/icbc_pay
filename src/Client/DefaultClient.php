@@ -5,6 +5,7 @@ namespace stlswm\IcbcPay\Client;
 use Exception;
 use stlswm\IcbcPay\Encrypt\ICBCEncrypt;
 use stlswm\IcbcPay\Request\BaseRequest;
+use stlswm\IcbcPay\Response\ICBCResponse;
 use stlswm\IcbcPay\Sign\RSAWithSha1;
 use stlswm\IcbcPay\Sign\RSAWithSha256;
 
@@ -53,15 +54,32 @@ class DefaultClient
         $this->charset = $charset;
     }
 
+    /**
+     * 验证工行返回数据
+     * @param  string  $json
+     * @return bool
+     */
+    public function icbcDataVerify(string $json): bool
+    {
+        $indexOfRootStart = strpos($json, "response_biz_content") + strlen("response_biz_content") + 2;
+        $indexOfRootEnd = strrpos($json, ",\"sign\":\"");
+        $indexOfSignStart = $indexOfRootEnd + strlen("sign") + 5;
+        $indexOfSignEnd = strrpos($json, "\"");
+        $respBizContentStr = substr($json, $indexOfRootStart, ($indexOfRootEnd - $indexOfRootStart));
+        $sign = substr($json, $indexOfSignStart, ($indexOfSignEnd - $indexOfSignStart));
+        return RSAWithSha1::verifySign($respBizContentStr, $sign, $this->icbcPubicKey);
+    }
+
 
     /**
      * @param  BaseRequest  $request
      * @param  string  $msgId
      * @param  string  $url  请求地址
      * @param  string  $method  请求方式
+     * @return ICBCResponse
      * @throws Exception
      */
-    public function exec(BaseRequest $request, string $msgId, string $url, string $method = 'post')
+    public function exec(BaseRequest $request, string $msgId, string $url, string $method = 'post'): ICBCResponse
     {
         $method = strtolower($method);
         //公共参数
@@ -101,11 +119,24 @@ class DefaultClient
         }
         switch ($method) {
             case 'get':
-                return HttpUtils::get($url, $params);
+                $apiRes = HttpUtils::get($url, $params);
+                break;
             case 'post':
-                return HttpUtils::post($url, $params);
+                var_dump($url, $params);
+                $apiRes = HttpUtils::post($url, $params);
+                break;
             default:
                 throw new Exception('unknown method:'.$method);
         }
+        if (!$this->icbcDataVerify($apiRes)) {
+            throw new Exception('icbc sign verify not passed');
+        }
+        $apiRes = json_decode($apiRes, true);
+        if ($request->isReqEncrypt()) {
+            $responseBizContent = ICBCEncrypt::decrypt('AES', $this->encryptKey, $this->encryptIv,
+                $apiRes['response_biz_content']);
+            $apiRes['response_biz_content'] = json_decode($responseBizContent, true);
+        }
+        return new ICBCResponse($apiRes['response_biz_content']);
     }
 }

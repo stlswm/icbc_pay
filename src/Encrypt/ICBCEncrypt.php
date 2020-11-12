@@ -45,7 +45,7 @@ class ICBCEncrypt
         switch ($type) {
             case "AES":
                 $aes = new AES(base64_decode($key), 'aes-128-cbc', $iv, OPENSSL_RAW_DATA);
-                return $aes->decrypt($content);
+                return $aes->decrypt(base64_decode($content));
             default:
                 throw new Exception('encrypt type:'.$type.' is not supported');
         }

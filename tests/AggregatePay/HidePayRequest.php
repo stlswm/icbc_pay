@@ -20,7 +20,7 @@ class HidePayRequest extends TestCase
     {
         $config = json_decode(file_get_contents(__DIR__.'/../Config/config.json'), true);
         $myPrivateKey = file_get_contents(__DIR__.'/../Config/yourname.pri');
-        $icbcPubicKey = file_get_contents(__DIR__.'/../Config/yourname.pub');
+        $icbcPubicKey = file_get_contents(__DIR__.'/../Config/icbc.pub');
         $cli = new DefaultClient($config['app_id'], $myPrivateKey, $icbcPubicKey, 'RSA2', 'AES',
             $config['encrypt_key']);
         $req = new \stlswm\IcbcPay\AggregatePay\HidePayRequest();
@@ -39,10 +39,9 @@ class HidePayRequest extends TestCase
         $req->setBusinessParam('notify_url', 'https://www.baidu.com');
         $req->setBusinessParam('notify_type', 'AG');
         $req->setBusinessParam('order_channel', '101');
-        //$req->setReqEncrypt(true);
-        $back = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),
+        $req->setReqEncrypt(true);
+        $res = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),
             \stlswm\IcbcPay\AggregatePay\HidePayRequest::UrlV1);
-        var_dump($back);
-        die;
+        $this->assertSame(true, $res->isSuccess());
     }
 }

@@ -31,13 +31,13 @@ class Subscription extends TestCase
         $req->setBusinessParam('tran_type', 'OfflinePay');
         $req->setBusinessParam('order_date', date('YmdHis'));
         $req->setBusinessParam('end_time', date('YmdHis', strtotime("+1 hour")));
-        $req->setBusinessParam('goods_body', '测试');
-        $req->setBusinessParam('goods_detail', '测试');
+        $req->setBusinessParam('goods_body', '芬达');
+        $req->setBusinessParam('goods_detail', '{"good_name":"芬达橙味300ml罐装","good_id":"1001","good_num":1}');
         $req->setBusinessParam('order_amount', 1);
         $req->setBusinessParam('spbill_create_ip', '127.0.0.1');
         $req->setBusinessParam('install_times', 1);
-        $req->setBusinessParam('return_url', 'https://www.baidu.com');
-        $req->setBusinessParam('notify_url', 'https://www.baidu.com');
+        $req->setBusinessParam('return_url', 'http://localhost');
+        $req->setBusinessParam('notify_url', 'http://localhost');
         $req->setBusinessParam('notify_type', 'AG');
         //$req->setReqEncrypt(true);
         $back = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),
