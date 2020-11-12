@@ -8,13 +8,13 @@ https://open.icbc.com.cn/icbc/apip/service_detail.html?service_id=P0067&from=sin
 
 安装
 
-```$xslt
+```
 composer require stlswm/icbc-pay
 ```
 
 单元测试运行说明：
 
-```$xslt
+```
 tests/Config目录添加文件
 
 config.json 内容参见config.json.example
