@@ -12,10 +12,7 @@ abstract class BaseRequest
      * @var string[] 请求参数列表
      */
     protected array $biz_list;
-    /**
-     * @var string
-     */
-    protected string $biz_content;
+
     /**
      * @var bool 是否要对请求进行加密
      */
@@ -34,15 +31,6 @@ abstract class BaseRequest
      * @return bool
      */
     public abstract function isValid(): bool;
-
-    /**
-     * 导出请求参数名称列表
-     * @return string[]
-     */
-    public function exportParamNameList(): array
-    {
-        return $this->biz_list;
-    }
 
     /**
      * 导出请求业务参数
