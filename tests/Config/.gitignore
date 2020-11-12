@@ -1,3 +1,2 @@
-/*.pri
-/*.pub
-/config.json
+*
+!config.json.example
