@@ -14,12 +14,10 @@ composer require stlswm/icbc-pay
 
 单元测试运行说明：
 
+tests/Config目录添加以下文件
+
 ```
-tests/Config目录添加文件
-
 config.json 内容参见config.json.example
-
 icbc.pub 工行网关公钥
-
 yourname.pri 调起接口的私钥
 ```
