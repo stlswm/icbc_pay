@@ -122,7 +122,6 @@ class DefaultClient
                 $apiRes = HttpUtils::get($url, $params);
                 break;
             case 'post':
-                var_dump($url, $params);
                 $apiRes = HttpUtils::post($url, $params);
                 break;
             default:
