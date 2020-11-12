@@ -31,13 +31,6 @@ class Query extends BaseRequest
     protected string $order_id;
 
     /**
-     * Query constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * 设置业务参数
      * @param  string  $name
      * @param  mixed  $value

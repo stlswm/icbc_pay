@@ -1,4 +1,5 @@
 <?php
+
 namespace stlswm\IcbcPay\Merchant\Subscription;
 
 use \Exception;

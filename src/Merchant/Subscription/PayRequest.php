@@ -111,9 +111,9 @@ class PayRequest extends BaseRequest
      * @var string 备用字段4，后续扩展使用
      */
     protected string $backup4;
-
+    
     /**
-     * HidePayRequest constructor.
+     * PayRequest constructor.
      * @throws Exception
      */
     public function __construct()
