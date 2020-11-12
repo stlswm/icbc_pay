@@ -131,7 +131,7 @@ class DefaultClient
             throw new Exception('icbc sign verify not passed');
         }
         $apiRes = json_decode($apiRes, true);
-        if ($request->isReqEncrypt()) {
+        if ($request->isReqEncrypt() && is_string($apiRes['response_biz_content'])) {
             $responseBizContent = ICBCEncrypt::decrypt('AES', $this->encryptKey, $this->encryptIv,
                 $apiRes['response_biz_content']);
             $apiRes['response_biz_content'] = json_decode($responseBizContent, true);

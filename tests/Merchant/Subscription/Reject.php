@@ -7,13 +7,12 @@ use PHPUnit\Framework\TestCase;
 use stlswm\IcbcPay\Client\DefaultClient;
 
 /**
- * Class Query
+ * Class Reject
  * @package Merchant\Subscription
  */
 class Reject extends TestCase
 {
     /**
-     * 支付下单测试
      * @throws Exception
      */
     public function testReject()
