@@ -16,6 +16,7 @@ use stlswm\IcbcPay\Sign\RSAWithSha256;
 class DefaultClient
 {
     protected string $appId;
+    protected string $merId;
     protected string $myPrivateKey;
     protected string $icbcPubicKey;
     protected string $signType;
@@ -53,6 +54,25 @@ class DefaultClient
         $this->encryptIv = str_repeat("\0", 16);
         $this->charset = $charset;
     }
+
+    /**
+     * 设置商户号
+     * @param  string  $merId
+     */
+    public function setMerId(string $merId)
+    {
+        $this->merId = $merId;
+    }
+
+    /**
+     * 获取商户号
+     * @return string
+     */
+    public function getMerId(): string
+    {
+        return $this->merId;
+    }
+
 
     /**
      * 验证工行返回数据
