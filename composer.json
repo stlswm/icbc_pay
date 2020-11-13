@@ -1,6 +1,6 @@
 {
   "name": "stlswm/icbc-pay",
-  "description": "icbc pay SDK",
+  "description": "中国工商银行支付接口SDK-php版本",
   "keywords": [
     "stlswm",
     "icbc",
