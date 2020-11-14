@@ -31,9 +31,9 @@ class ICBCResponse
      */
     public function __construct(array $apiResContent)
     {
-        $this->msgId = $apiResContent['msg_id'];
-        $this->returnCode = $apiResContent['return_code'];
-        $this->returnMsg = $apiResContent['return_msg'];
+        $this->msgId = $apiResContent['msg_id'] ?? '';
+        $this->returnCode = $apiResContent['return_code'] ?? '';
+        $this->returnMsg = $apiResContent['return_msg'] ?? '';
         unset($apiResContent['msg_id']);
         unset($apiResContent['return_code']);
         unset($apiResContent['return_msg']);
