@@ -52,6 +52,7 @@ $req->setReqEncrypt(true);//当请求需要加密时设置
 $res = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),\stlswm\IcbcPay\Merchant\Subscription\HidePayRequest::UrlV1);
 //获取返回
 var_dump($res);
+var_dump($res->isSuccess());
 ```
 
 异步通知校验demo
