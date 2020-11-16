@@ -12,11 +12,12 @@ https://open.icbc.com.cn/icbc/apip/service_detail.html?service_id=P0067&from=sin
 composer require stlswm/icbc-pay
 ```
 
-使用举例
+下单demo
 
 ```
 <?php
 use stlswm\IcbcPay\Client\DefaultClient;
+
 //----------------------
 //请求流程（所有接口都是这个套路）
 //----实例化cli对象
@@ -51,6 +52,21 @@ $req->setReqEncrypt(true);//当请求需要加密时设置
 $res = $cli->exec($req, date('YmdHis').mt_rand(1000, 9999),\stlswm\IcbcPay\Merchant\Subscription\HidePayRequest::UrlV1);
 //获取返回
 var_dump($res);
+```
+
+异步通知校验demo
+
+```
+<?php
+use stlswm\IcbcPay\Client\DefaultClient;
+
+$cli = new DefaultClient($payAccount['app_id'], file_get_contents($payAccount['my_pri_key']),
+            file_get_contents($payAccount['their_pub_key']), 'RSA2', 'AES', $payAccount['encrypt_key']);
+$cli->setMerId($payAccount['mch_id']);
+//关于这里签名要使用本服务器的通知地址这里工行的设计是不科学的，假如支付服务器有迁移的作业导致域名变更这里签名验证会出问题，
+//当然也有个做法是保存每次交易的通知地址（如果你不怕麻烦我不反对）
+//此处省略几个字。
+var_dump($cli->icbcNotifyDatVerify('你服务器的异步通知地址', $_POST));
 ```
 
 单元测试运行说明：
