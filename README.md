@@ -64,9 +64,6 @@ use stlswm\IcbcPay\Client\DefaultClient;
 $cli = new DefaultClient($payAccount['app_id'], file_get_contents($payAccount['my_pri_key']),
             file_get_contents($payAccount['their_pub_key']), 'RSA2', 'AES', $payAccount['encrypt_key']);
 $cli->setMerId($payAccount['mch_id']);
-//关于这里签名要使用本服务器的通知地址这里工行的设计是不科学的，假如支付服务器有迁移的作业导致域名变更这里签名验证会出问题，
-//当然也有个做法是保存每次交易的通知地址（如果你不怕麻烦我不反对）
-//不说那么多了，此处省略几个字。
 var_dump($cli->icbcNotifyDatVerify('你服务器的异步通知地址', $_POST));
 ```
 
