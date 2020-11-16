@@ -73,6 +73,15 @@ class DefaultClient
         return $this->merId;
     }
 
+    /**
+     * 获取工行网关公钥
+     * @return string
+     */
+    public function getIcbcPubicKey(): string
+    {
+        return $this->icbcPubicKey;
+    }
+
 
     /**
      * 验证工行返回数据
@@ -88,6 +97,33 @@ class DefaultClient
         $respBizContentStr = substr($json, $indexOfRootStart, ($indexOfRootEnd - $indexOfRootStart));
         $sign = substr($json, $indexOfSignStart, ($indexOfSignEnd - $indexOfSignStart));
         return RSAWithSha1::verifySign($respBizContentStr, $sign, $this->icbcPubicKey);
+    }
+
+    /**
+     * 异步通知签名
+     * @param  string  $path
+     * @param  array  $param
+     * @return bool
+     * @throws Exception
+     */
+    public function icbcNotifyDatVerify(string $path, array $param): bool
+    {
+        if (!isset($param['sign'])) {
+            throw new Exception('param sign is required');
+        }
+        $sign = $param['sign'];
+        unset($param['sign']);
+        $path = parse_url($path, PHP_URL_PATH);
+        $signStr = $path.'?';
+        ksort($param);
+        foreach ($param as $key => $value) {
+            if (null == $key || "" == $key || null == $value || "" == $value) {
+                continue;
+            }
+            $signStr .= $key.'='.$value.'&';
+        }
+        $signStr = substr($signStr, 0, -1);
+        return RSAWithSha1::verifySign($signStr, $sign, $this->icbcPubicKey);
     }
 
 
