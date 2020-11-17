@@ -149,7 +149,7 @@ class DefaultClient
         $bizContent = json_encode($request->exportBusinessParam());
         if ($request->isReqEncrypt()) {
             $params['encrypt_type'] = $this->encryptType;
-            $bizContent = ICBCEncrypt::encrypt('AES', $this->encryptKey, $this->encryptIv, $bizContent);
+            $bizContent = ICBCEncrypt::encrypt($this->encryptType, $this->encryptKey, $this->encryptIv, $bizContent);
         }
         $params['biz_content'] = $bizContent;
         //参数验证
