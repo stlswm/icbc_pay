@@ -42,8 +42,9 @@ class HttpUtils
      */
     public static function get($url, $params)
     {
-        $headers = [];
-        $headers[self::VersionHeaderName] = self::Version;
+        $headers = [
+            self::VersionHeaderName.': '.self::Version
+        ];
         $getUrl = self::buildGetUrl($url, $params);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $getUrl);
@@ -69,9 +70,9 @@ class HttpUtils
      */
     public static function post($url, $params)
     {
-        $headers = [];
-        $headers[] = 'Expect:';
-        $headers[self::VersionHeaderName] = self::Version;
+        $headers = [
+            self::VersionHeaderName.': '.self::Version
+        ];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
